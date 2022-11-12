@@ -1,0 +1,56 @@
+.card-container{
+    border-radius: 20px;
+    box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.25);
+    height: 27rem;
+    width: 20rem;
+}
+
+.property-image{
+    height: 13rem;
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    object-fit: cover;
+}
+.bubble-container{
+    display: flex;
+    margin-left: 1rem;
+    margin-top: -1.5rem;
+}
+
+.price-bubble{
+    padding-top: 0.5rem;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+    padding-bottom: 0.5rem;
+    border-radius: 20px;
+    background-color: #B964C7;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-right: 0.7rem;
+}
+
+.type-bubble{
+    padding-top: 0.5rem;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+    padding-bottom: 0.5rem;
+    border-radius: 20px;
+    background-color: #58698A;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.filter-container{
+    width: 25rem;
+    height: 15rem;
+    border-radius: 20px;
+    border:rgba(0, 0, 0, 0.25) solid 1px;
+    padding: 1rem;
+}
+
+.consult-button{
+    width: 10rem;
+    
+}

@@ -1,0 +1,11 @@
+.button-custom{
+    background-color: #B964C7;
+    border-radius: 20px;
+    border: 0;
+    padding: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+    height: 3rem;
+    width: 100%;
+}
+

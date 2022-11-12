@@ -1,0 +1,34 @@
+.menu-container{
+    display: flex;
+    flex-direction: row;
+}   
+
+.nav-bar-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.nav-bar-container-no-home{
+    background-color: #B964C7;
+}
+
+.menu-item{
+    color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    height: 3rem;
+    text-decoration: none;
+}
+
+.menu-item:hover{
+    border-bottom: 10px solid #D5CABD;
+    transform: scale(1.1);
+    color: white
+}
+

@@ -1,0 +1,35 @@
+.logo {
+    width: 100%;
+    max-width: 100px ;
+    margin-top: 20px;
+}
+
+.profile {
+    margin-bottom: 70px;
+}
+
+hr {
+    width: 70%;
+    margin: auto;
+}
+
+.center {
+    text-align: center;
+}
+
+.bg {
+    background-color: #B964C7;
+    height: 100vh;
+}
+
+.url {
+    border-top: 1px solid rgb(46, 46, 46);
+    width: 104%;
+    color: #000;
+}
+
+.url:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-right: 10px solid rgb(212, 212, 212);
+    color: #fff;
+}

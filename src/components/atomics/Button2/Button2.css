@@ -1,0 +1,13 @@
+.button-custom2{
+    background-color: #D5CABD;
+    margin-left: 37%;
+    margin-right: 50%;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    border: 0;
+    padding: 0.5rem;
+    color: black;
+    font-weight: bold;
+    height: 5rem;
+    width: 25%;
+}
