@@ -13,3 +13,4 @@ export { default as Estates } from "./RealEstateAgent/Estates";
 export { default as Admin } from "./Admin/Main";
 export { default as Login } from "./Login";
 export { default as AboutUs } from "./AboutUs";
+export { default as NotMatch} from "./NotMatch";

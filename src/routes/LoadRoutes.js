@@ -17,6 +17,7 @@ import {
   Admin,
   Login,
   AboutUs,
+  NotMatch
 } from "../views";
 import { useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ const LoadRoutes = () => {
     <Routes>
       {userState.email !== "" ? (
         <>
+        
           <Route exact path="/secretary" element={<Secretary />} />
           <Route exact path="/clients" element={<Clients />} />
           <Route exact path="/addclients" element={<AddClients />} />
@@ -41,8 +43,9 @@ const LoadRoutes = () => {
           <Route exact path="/realestateagent" element={<RealEstateAgent />} />
           <Route exact path="/viewclients" element={<ViewClients />} />
           <Route exact path="/viewevents" element={<ViewEvents />} />
-          <Route exact path="/estates" element={<Estates />} />
+          <Route extact path="/estates/" element={<Estates />} />
           <Route exact path="/admin" element={<Admin />} />
+          <Route exact path="*" element={<NotMatch />} />
         </>
       ) : (
         <>

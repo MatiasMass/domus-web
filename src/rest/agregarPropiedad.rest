@@ -1,0 +1,35 @@
+POST http://localhost:3000/api/propiedades
+Content-Type: application/json
+
+  {
+    "id": 1,
+    "codPropiedad": "sdjondsfhuhf",
+    "medidas": "",
+    "antiguedad": null,
+    "amueblado": false,
+    "cantHabitaciones": 3,
+    "servicios": null,
+    "descripcion": "lorem ipsum",
+    "disponibilidad": true,
+    "tipo": "VENTA",
+    "precio": 600,
+    "direccion": {
+      "id": 1,
+      "provincia": "Corrientes",
+      "ciudad": "Capital",
+      "numero": "123",
+      "barrio": null,
+      "piso": null,
+      "depto": null
+    },
+    "fotos": [
+      {
+        "id": 1,
+        "url": "/tmp/imagen1.png"
+      },
+      {
+        "id": 2,
+        "url": "/tmp/imagen2.png"
+      }
+    ]
+  }
