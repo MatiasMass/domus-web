@@ -1,1 +1,1 @@
-PUT http://localhost:3000/api/propiedades/1
+PUT http://localhost:3000/api/propiedades/25

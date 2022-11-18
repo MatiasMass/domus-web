@@ -1,10 +1,30 @@
-import React from 'react'
-import {Container, Row, Col, Form, FloatingLabel, Button} from  'react-bootstrap'
+import React, {useState} from 'react'
+import {Container, Row, Col, Form, FloatingLabel, Button, Nav} from  'react-bootstrap'
+import { Link } from "react-router-dom";
 import "../Secretary.css" 
 import SideBar from '../../../layout/SideBar'
+import clientesAPI from '../../../clientes'
 
 const AddClients = () => {
-  return (
+
+    // const [clientes, setClientes] = useState(clientesAPI)
+    const agregarCliente = ()=>{
+        clientesAPI.push(
+            {id: clientesAPI.length + 1,
+                dni: 4555555,
+                nombre: "Carlos",
+                apellido: "De la villa",
+                fecha: "19/10/1995",
+                telefono: "55-555-55",
+                direccion: "Zacarias  Sanchez 55",
+                correo: "Correo@gmail.com",
+                tipoCliente: "Propietario",
+                estado: "activo"
+            },
+        )
+    }
+
+    return (
     <Container>
         <Row>
             <Col sm={3} className = "bg">
@@ -139,7 +159,15 @@ const AddClients = () => {
                     </Row>           
                     <Row>
                         <div className="buttons">
-                            <Button className='bg-success' style = {{margin: "0px 5px"}}>Confirmar</Button>    
+                        <Button variant="success" onClick = {agregarCliente}>
+                            <Nav defaultActiveKey="/home" className="flex-column text-start">
+                            <Link
+                                to="/clients"
+                                style={{ color: "#fff", textDecoration: "none" }}>
+                                Agregar Cliente
+                            </Link>
+                            </Nav>
+                        </Button>
                             <Button className='bg-danger'>Cancelar</Button>            
                         </div>
                     </Row>

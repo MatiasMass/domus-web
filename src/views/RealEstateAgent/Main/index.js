@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import { Container, Row, Col, Card, Button, Nav } from "react-bootstrap";
 import SideBarRealEstate from "../../../layout/SideBarRealEstate";
 import "../RealEstateAgent.css";
+import clientesAPI from '../../../clientes'
 
 const CustomCard = ({ name, total }) => {
   return (
@@ -35,8 +36,6 @@ const RealEstateAgent = () => {
           }
       } catch (error) {
         console.error(error.message);
-        // alert("The country doesn't exist")
-        // ref.current = `${error.mes            setError(false)sage}`
       }
   
     }
@@ -45,7 +44,7 @@ const RealEstateAgent = () => {
       getPropiedades()
       
     }, [])
-    console.log(propiedades);
+    
   return (
     <Container>
       <Row className="vw-100" stlye={{ height: "vw-100" }}>
@@ -55,12 +54,10 @@ const RealEstateAgent = () => {
         <Col sm={9} className="mb-101">
           <h1 className="mt-5">Bienvenida Agente Inmobiliario</h1>
           <div className="d-flex flex-wrap justify-content-center mt-5">
-            <CustomCard name="Clientes" total="20" />
+            <CustomCard name="Clientes" total= {clientesAPI.length} />
             <CustomCard name="Propiedades" total={propiedades.length} />
             <CustomCard name="Eventos" total="3" />
           </div>
-          <button className = "btn btn-success" onClick= {getPropiedades}>Click me</button>
-
         </Col>
       </Row>
     </Container>
