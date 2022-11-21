@@ -10,6 +10,7 @@ export { default as RealEstateAgent } from "./RealEstateAgent/Main";
 export { default as ViewClients } from "./RealEstateAgent/ViewClients";
 export { default as ViewEvents } from "./RealEstateAgent/ViewEvents";
 export { default as Estates } from "./RealEstateAgent/Estates";
+export { default as AddPropiedades} from "./RealEstateAgent/AddPropiedades";
 export { default as Admin } from "./Admin/Main";
 export { default as Login } from "./Login";
 export { default as AboutUs } from "./AboutUs";

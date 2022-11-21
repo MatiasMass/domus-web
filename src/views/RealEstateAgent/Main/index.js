@@ -16,7 +16,7 @@ const CustomCard = ({ name, total }) => {
   );
 };
 
-const url = "http://localhost:3000/api/propiedades"
+const url = "http://localhost:8000/api/propiedades"
 
 
 const RealEstateAgent = () => {

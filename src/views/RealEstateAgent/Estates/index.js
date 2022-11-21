@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import {Container, Row, Col} from  'react-bootstrap'
 import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, TextField, Box} from '@mui/material'
+import {Link} from "react-router-dom"
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,7 +14,7 @@ import SideBarRealEstate from '../../../layout/SideBarRealEstate'
 import "./Estates.css" 
 import clientesAPI from '../../../clientes'
 
-const url = "http://localhost:3000/api/propiedades/"
+const url = "http://localhost:8000/api/propiedades/"
 
 const style = {
   position: 'absolute',
@@ -150,14 +151,7 @@ const Estates = () => {
         (caso==='Editar') ? abrirCerrarModalEditar(): abrirCerrarModalEliminar()
       }
 
-      const peticionPost = async () =>{
-        await axios.post(url, consolaSeleccionada)
-          .then(response =>{ 
-            setData(data.concat(response.data))
-          }
-          )
-          abrirCerrarModalInsertar()
-      }
+
 
       const peticionPut=async()=>{
         console.log(consolaSeleccionada);
@@ -202,7 +196,10 @@ const Estates = () => {
             </Col>
             <Col sm={9}> 
                 <h1 className='' style={{margin: "20px 0"}}>Propiedades</h1>
-                <Button  variant="contained" onClick = {abrirCerrarModalInsertar}>Agregar Propiedad</Button>                
+                {/* <Button  variant="contained" onClick = {abrirCerrarModalInsertar}>Agregar Propiedad</Button>                 */}
+                <Button>
+                  <Link to = "/addpropiedades">Agregar Propiedad</Link>
+                </Button>
                 <TableContainer>
                   <Table style = {{height: "500px", overflow: "auto"}}>
                     <TableHead>
@@ -228,7 +225,7 @@ const Estates = () => {
                             <TableCell>{consola.cantHabitaciones}</TableCell>
                             <TableCell>{consola.tipo}</TableCell>
                             <TableCell>{(consola.disponibilidad !== true)? "SI" : "NO" }</TableCell>
-                            <TableCell>{consola.precio}</TableCell>
+                            <TableCell>{typeof consola.precio === 'string' ?  parseFloat(consola.precio) : consola.precio }</TableCell>
                             <TableCell>
                               <Box sx = {{cursor: "pointer"}}>
                                 <EditIcon onClick={()=>seleccionarConsola(consola, 'Editar')} />
@@ -245,7 +242,7 @@ const Estates = () => {
                   </Table>
                 </TableContainer>
               
-              <Modal 
+              {/* <Modal 
                 open = {modalInsertar}
                 close = {abrirCerrarModalInsertar}>
                     <Box sx = {style}>
@@ -340,7 +337,7 @@ const Estates = () => {
                       <Button variant="outlined" onClick = {abrirCerrarModalInsertar}>Cerrar</Button>
                       <Button variant="contained" onClick={peticionPost} >Guargar Cambios</Button>
                     </Box>
-              </Modal>
+              </Modal> */}
               <Modal 
                 open = {modalEditar}
                 close = {abrirCerrarModalEditar}>

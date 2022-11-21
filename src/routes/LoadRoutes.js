@@ -11,6 +11,7 @@ import {
   Events,
   AddEvents,
   RealEstateAgent,
+  AddPropiedades,
   ViewClients,
   ViewEvents,
   Estates,
@@ -41,6 +42,7 @@ const LoadRoutes = () => {
           <Route exact path="/events" element={<Events />} />
           <Route exact path="/addevents" element={<AddEvents />} />
           <Route exact path="/realestateagent" element={<RealEstateAgent />} />
+          <Route exact path="/addpropiedades" element={<AddPropiedades />} />
           <Route exact path="/viewclients" element={<ViewClients />} />
           <Route exact path="/viewevents" element={<ViewEvents />} />
           <Route extact path="/estates/" element={<Estates />} />

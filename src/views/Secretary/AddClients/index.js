@@ -9,7 +9,7 @@ const AddClients = () => {
 
     // const [clientes, setClientes] = useState(clientesAPI)
     const agregarCliente = ()=>{
-        clientesAPI.push(
+        clientesAPI = clientesAPI.push(
             {id: clientesAPI.length + 1,
                 dni: 4555555,
                 nombre: "Carlos",
@@ -160,15 +160,15 @@ const AddClients = () => {
                     <Row>
                         <div className="buttons">
                         <Button variant="success" onClick = {agregarCliente}>
-                            <Nav defaultActiveKey="/home" className="flex-column text-start">
+                            {/* <Nav defaultActiveKey="/home" className="flex-column text-start"> */}
                             <Link
                                 to="/clients"
                                 style={{ color: "#fff", textDecoration: "none" }}>
                                 Agregar Cliente
                             </Link>
-                            </Nav>
+                            {/* </Nav> */}
                         </Button>
-                            <Button className='bg-danger'>Cancelar</Button>            
+                        <Button className='bg-danger'>Cancelar</Button>            
                         </div>
                     </Row>
                 </Form>
