@@ -1,0 +1,20 @@
+h1{
+    margin: 30px 0;
+}
+
+.img-container img{
+    width: 60%
+}
+
+.info-container{
+    padding: 30px;
+}   
+
+.info-container ul{
+    text-align: left!important;
+}
+
+.info-container .buttons{
+    display: flex;
+    gap: 15px;
+}

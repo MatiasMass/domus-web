@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Container, Row, Col, Form} from  'react-bootstrap'
+import {Button} from '@mui/material'
 import { Link, useNavigate } from "react-router-dom";
 import SideBarRealEstate from '../../../layout/SideBarRealEstate'
 import clientesAPI from '../../../clientes'
@@ -18,117 +19,46 @@ function randomString(length, chars) {
 const AddPropiedades = () => {
 
     const [clientes, setClientes] = useState(clientesAPI)
-    const [cliente, setCliente] = useState(clientes[0].dni);
-    const [amueblado, setAmueblado] = useState(true);
-    const [descripcion, setDescripcion] = useState("")
-    const [tipo, setTipo] = useState("VENTA")
-    const [servicios, setServicios] = useState(false)
-    const [disponibilidad, setDisponibilidad] = useState(false)
+
 
     const navigate = useNavigate()
 
-    const initialForm = {
-        "codPropiedad": randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-        "medidas": "",
-        "antiguedad": null,
-        "amueblado": amueblado,
-        "cantHabitaciones": 1,
-        "servicios": servicios,
-        "descripcion": "Sin descripcion",
-        "disponibilidad": disponibilidad,
-        "tipo": tipo,
-        "precio": 1,
-        "direccion": {
-            "id": 1,
-            "provincia": "CHACO",
-            "ciudad": "RESISTENCIA",
-            "numero": "123",
-            "barrio": null,
-            "piso": null,
-            "depto": null
-        },
-        "cliente": {
-            "id": 1,
-            "cuil": "20-15100200",
-            "nombre": "JUAN PEREZ",
-            "correo": null,
-            "telefono": null
-        },
-        "fotos": []
+    const initialForm = 
+        {
+            "codPropiedad": randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+            "medidas": "",
+            "antiguedad": null,
+            "amueblado": false,
+            "cantHabitaciones": 1,
+            "servicios": null,
+            "descripcion": "",
+            "disponibilidad": true,
+            "tipo": "",
+            "precio": 1,
+            "direccion": {
+                "id": 1,
+                "provincia": "",
+                "ciudad": "",
+                "numero": "",
+                "barrio": null,
+                "piso": null,
+                "depto": null
+            },
+            "cliente": {
+                "id": 1,
+                "cuil": "",
+                "nombre": "",
+                "correo": null,
+                "telefono": null
+            },
+            "fotos": []
         }
 
     const [body, handleChange] = useForm(initialForm) 
 
-    // const [propiedadSeleccionada, setPropiedadSeleccionada] = useState(
-        // {
-        //     "codPropiedad": randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-        //     "medidas": "",
-        //     "antiguedad": null,
-        //     "amueblado": amueblado,
-        //     "cantHabitaciones": 1,
-        //     "servicios": servicios,
-        //     "descripcion": "Sin descripcion",
-        //     "disponibilidad": disponibilidad,
-        //     "tipo": tipo,
-        //     "precio": 1,
-        //     "direccion": {
-        //         "id": 1,
-        //         "provincia": "CHACO",
-        //         "ciudad": "RESISTENCIA",
-        //         "numero": "123",
-        //         "barrio": null,
-        //         "piso": null,
-        //         "depto": null
-        //     },
-        //     "cliente": {
-        //         "id": 1,
-        //         "cuil": "20-15100200",
-        //         "nombre": "JUAN PEREZ",
-        //         "correo": null,
-        //         "telefono": null
-        //     },
-        //     "fotos": []
-        //     })
-  
-
-  
-    //   const handleChange = (event) =>{
-        // e.preventDefaul()
-
-        // if (event.target.name === "amueblado"){
-        //     const value = event.target.value
-        //     if (value === "true"){
-        //         setAmueblado(true)
-        //     }else{
-        //         setAmueblado(false)
-        //     }
-        // }else if (event.target.name === "tipo"){
-        //     setTipo(event.target.value)
-        // }else if (event.target.name === "descripcion"){
-        //     setDescripcion(event.target.value)
-        // }else if (event.target.name === "servicios"){
-        //     setServicios(event.target.value)
-        // }else if (event.target.name === "disponibilidad"){
-        //     setDisponibilidad(event.target.value)
-        // }
-
-
-        // const name = event.target.name
-        // const value = event.target.value
-        // setPropiedadSeleccionada(prevState =>({
-        //   ...prevState,
-        //   [name]: value
-        // }))
-        // console.log(propiedadSeleccionada);
-
-    //   }
-  
-     
-
-      
-    // const [clientes, setClientes] = useState(clientesAPI)
     const peticionPost = async (e) =>{
         e.preventDefault()
+        console.log(body);
         await axios.post(url, body)
           .then(response =>{ 
             console.log("Todo OK");
@@ -140,10 +70,10 @@ const AddPropiedades = () => {
     return (
     <Container>
         <Row>
-            <Col sm={3} className = "bg" style= {{height: "120vh"}}>
+            <Col sm={3} className = "bg" style= {{height: "130vh"}}>
                 <SideBarRealEstate name = "Clara" job = "Agente Inmobiliario" />
             </Col>
-            <Col sm={9} className = "100vh" style={{height: "100vh"}}>
+            <Col sm={9}>
                 <Row>
                     <h1 style={{marginTop: "20px"}}>Agregar Nueva Propiedad</h1>
                     <form action="">
@@ -242,42 +172,77 @@ const AddPropiedades = () => {
                         <h3>Direccion Informacion</h3>
                         <div className="form">
                             <div className="inner-container">
-                                <label htmlFor="">Codigo de Propiedad</label>
+                                <label htmlFor="">Provincia</label>
                                 <input 
-                                    type="text" 
-                                    placeholder='ID' 
-                                    readOnly
+                                    type="text"
+                                    name="provincia"
+                                    placeholder='Provincia' 
+                                    onChange={handleChange}
+                                    value={body.direccion.provincia} 
                                 />
                             </div>
                             <div className="inner-container">
-                                <label htmlFor="">Cantidad de Habitaciones</label>
+                                <label htmlFor="">Ciudad</label>
+                                <input 
+                                    type="text"
+                                    name="ciudad"
+                                    placeholder='Ciudad' 
+                                    onChange={handleChange}
+                                    value={body.direccion.ciudad} 
+                                />
+                            </div>
+                            <div className="inner-container">
+                                <label htmlFor="">Numero</label>
                                 <input 
                                     type="number"
                                     min="1"
-                                    placeholder='Cantidad Habitaciones' 
+                                    placeholder='Numeros' 
                                     onChange={handleChange} 
-                                    name = "cantHabitaciones"/>
+                                    name = "numero"
+                                    value={body.direccion.numero}
+                                />
                             </div>
                             <div className="inner-container">
-                                <label htmlFor="">Codigo de Propiedad</label>
-                                <input type="text" placeholder='ID'/>
+                                <label htmlFor="">Barrio</label>
+                                <input 
+                                    type="text"
+                                    name="barrio"
+                                    placeholder='Barrio' 
+                                    onChange={handleChange}
+                                    value={body.direccion.barrio} 
+                                />
                             </div>
                             <div className="inner-container">
-                                <label htmlFor="">Codigo de Propiedad</label>
-                                <input type="text" placeholder='ID'/>
+                                <label htmlFor="">Piso</label>
+                                <input 
+                                    type="text"
+                                    name="piso"
+                                    placeholder='Piso' 
+                                    onChange={handleChange}
+                                    value={body.direccion.piso} 
+                                />
                             </div>
-                            
+                            <div className="inner-container">
+                                <label htmlFor="">Depto</label>
+                                <input 
+                                    type="text"
+                                    name="depto"
+                                    placeholder='Depto' 
+                                    onChange={handleChange}
+                                    value={body.direccion.depto} 
+                                />
+                            </div>
                         </div>
-                        <button onClick = {peticionPost}>
-                            {/* <Nav defaultActiveKey="/home" className="flex-column text-start"> */}
-                            {/* <Link
-                                to="/estates"
-                                style={{textDecoration: "none" }}>
-                                Agregar Cliente
-                            </Link> */}
-                            Agregar Cliente
-                            {/* </Nav> */}
-                        </button>
+                        <div className="buttons">
+                            <Button color="success" variant="contained" onClick = {peticionPost} className="button">
+                                Agregar Propiedad
+                            </Button>
+                            <Link to = "/estates">
+                                <Button color="error" variant="contained">
+                                    Cancelar
+                                </Button>
+                            </Link>
+                        </div>
                     </form>
                 </Row>
             </Col>

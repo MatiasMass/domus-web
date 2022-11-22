@@ -1,16 +1,12 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import {Container, Row, Col} from  'react-bootstrap'
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, TextField, Box} from '@mui/material'
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, Box} from '@mui/material'
 import {Link} from "react-router-dom"
-import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import SideBarRealEstate from '../../../layout/SideBarRealEstate'
 import "./Estates.css" 
 import clientesAPI from '../../../clientes'
@@ -192,9 +188,11 @@ const Estates = () => {
             <Col sm={9}> 
                 <h1 className='' style={{margin: "20px 0"}}>Propiedades</h1>
                 {/* <Button  variant="contained" onClick = {abrirCerrarModalInsertar}>Agregar Propiedad</Button>                 */}
-                <Button color = "success">
-                  <Link to = "/addpropiedades">Agregar Propiedad</Link>
-                </Button>
+                <Link to = "/addpropiedades">
+                  <Button variant="contained" color="success">
+                    Agregar Propiedad
+                  </Button>
+                </Link>
                 <TableContainer>
                   <Table>
                     <TableHead>
