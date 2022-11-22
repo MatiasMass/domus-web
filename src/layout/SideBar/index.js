@@ -2,9 +2,20 @@ import React from "react";
 import { Nav } from "react-bootstrap";
 import logo from "../../assets/loginm.png";
 import "./SideBar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {closeSesion} from "../../redux/reducers/userReducer";
 
 export const SideBar = ({ name = "Maria Garcia", job }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const handleLogout = (e) =>{
+    e.preventDefault()
+    dispatch(closeSesion())
+    navigate('/')
+  }
+
   return (
     <>
       <div className="profile">
@@ -23,7 +34,7 @@ export const SideBar = ({ name = "Maria Garcia", job }) => {
         <Link eventKey="link-2" to="/events" className="url pt-1">
           <span className="ms-3"> Eventos</span>
         </Link>
-        <Nav.Link eventKey="link-3" className="url" href="/">
+        <Nav.Link eventKey="link-3" className="url" onClick={handleLogout}>
           Cerrar Sesion
         </Nav.Link>
       </Nav>

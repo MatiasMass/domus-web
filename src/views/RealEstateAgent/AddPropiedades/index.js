@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {Container, Row, Col, Form} from  'react-bootstrap'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBarRealEstate from '../../../layout/SideBarRealEstate'
 import clientesAPI from '../../../clientes'
 import './index.css'
 import axios from 'axios'
-import { logDOM } from '@testing-library/react';
+import {useForm} from '../../../hooks/useForms'
 
 const url = "http://localhost:8000/api/propiedades/"
 
@@ -19,81 +19,120 @@ const AddPropiedades = () => {
 
     const [clientes, setClientes] = useState(clientesAPI)
     const [cliente, setCliente] = useState(clientes[0].dni);
-    const [amueblado, setAmueblado] = useState(false);
+    const [amueblado, setAmueblado] = useState(true);
     const [descripcion, setDescripcion] = useState("")
     const [tipo, setTipo] = useState("VENTA")
     const [servicios, setServicios] = useState(false)
     const [disponibilidad, setDisponibilidad] = useState(false)
-    const [modalInsertar, setModalInsertar] = useState(false)
-    const [modalEditar, setModalEditar] = useState(false)
-    const [modalEliminar, setModalEliminar] = useState(false)
 
-    const [propiedadSeleccionada, setPropiedadSeleccionada] = useState(
-        {
+    const navigate = useNavigate()
+
+    const initialForm = {
+        "codPropiedad": randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+        "medidas": "",
+        "antiguedad": null,
+        "amueblado": amueblado,
+        "cantHabitaciones": 1,
+        "servicios": servicios,
+        "descripcion": "Sin descripcion",
+        "disponibilidad": disponibilidad,
+        "tipo": tipo,
+        "precio": 1,
+        "direccion": {
             "id": 1,
-            "codPropiedad": randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-            "medidas": "",
-            "antiguedad": null,
-            "amueblado": amueblado,
-            "cantHabitaciones": 1,
-            "servicios": servicios,
-            "descripcion": "Sin descripcion",
-            "disponibilidad": disponibilidad,
-            "tipo": tipo,
-            "precio": 1,
-            "direccion": {
-                "id": 1,
-                "provincia": "CHACO",
-                "ciudad": "RESISTENCIA",
-                "numero": "123",
-                "barrio": null,
-                "piso": null,
-                "depto": null
-            },
-            "cliente": {
-                "id": 1,
-                "cuil": "20-15100200",
-                "nombre": "JUAN PEREZ",
-                "correo": null,
-                "telefono": null
-            },
-            "fotos": []
-            })
-  
-  
-      const handleChange = (event) =>{
-        // e.preventDefaul()
-
-        if (event.target.name === "amueblado"){
-            setAmueblado(event.target.value)
-        }else if (event.target.name === "tipo"){
-            setTipo(event.target.value)
-        }else if (event.target.name === "descripcion"){
-            setDescripcion(event.target.value)
-        }else if (event.target.name === "servicios"){
-            setServicios(event.target.value)
-        }else if (event.target.name === "disponibilidad"){
-            setDisponibilidad(event.target.value)
+            "provincia": "CHACO",
+            "ciudad": "RESISTENCIA",
+            "numero": "123",
+            "barrio": null,
+            "piso": null,
+            "depto": null
+        },
+        "cliente": {
+            "id": 1,
+            "cuil": "20-15100200",
+            "nombre": "JUAN PEREZ",
+            "correo": null,
+            "telefono": null
+        },
+        "fotos": []
         }
 
+    const [body, handleChange] = useForm(initialForm) 
 
-        const name = event.target.name
-        const value = event.target.value
-        setPropiedadSeleccionada(prevState =>({
-          ...prevState,
-          [name]: value
-        }))
-        console.log(propiedadSeleccionada);
-      }
+    // const [propiedadSeleccionada, setPropiedadSeleccionada] = useState(
+        // {
+        //     "codPropiedad": randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+        //     "medidas": "",
+        //     "antiguedad": null,
+        //     "amueblado": amueblado,
+        //     "cantHabitaciones": 1,
+        //     "servicios": servicios,
+        //     "descripcion": "Sin descripcion",
+        //     "disponibilidad": disponibilidad,
+        //     "tipo": tipo,
+        //     "precio": 1,
+        //     "direccion": {
+        //         "id": 1,
+        //         "provincia": "CHACO",
+        //         "ciudad": "RESISTENCIA",
+        //         "numero": "123",
+        //         "barrio": null,
+        //         "piso": null,
+        //         "depto": null
+        //     },
+        //     "cliente": {
+        //         "id": 1,
+        //         "cuil": "20-15100200",
+        //         "nombre": "JUAN PEREZ",
+        //         "correo": null,
+        //         "telefono": null
+        //     },
+        //     "fotos": []
+        //     })
+  
+
+  
+    //   const handleChange = (event) =>{
+        // e.preventDefaul()
+
+        // if (event.target.name === "amueblado"){
+        //     const value = event.target.value
+        //     if (value === "true"){
+        //         setAmueblado(true)
+        //     }else{
+        //         setAmueblado(false)
+        //     }
+        // }else if (event.target.name === "tipo"){
+        //     setTipo(event.target.value)
+        // }else if (event.target.name === "descripcion"){
+        //     setDescripcion(event.target.value)
+        // }else if (event.target.name === "servicios"){
+        //     setServicios(event.target.value)
+        // }else if (event.target.name === "disponibilidad"){
+        //     setDisponibilidad(event.target.value)
+        // }
+
+
+        // const name = event.target.name
+        // const value = event.target.value
+        // setPropiedadSeleccionada(prevState =>({
+        //   ...prevState,
+        //   [name]: value
+        // }))
+        // console.log(propiedadSeleccionada);
+
+    //   }
   
      
 
       
     // const [clientes, setClientes] = useState(clientesAPI)
-    const peticionPost = async () =>{
-        await axios.post(url, propiedadSeleccionada)
+    const peticionPost = async (e) =>{
+        e.preventDefault()
+        await axios.post(url, body)
           .then(response =>{ 
             console.log("Todo OK");
+            navigate('/estates')
           }
           )
       }
@@ -131,7 +170,7 @@ const AddPropiedades = () => {
                                 <label htmlFor="">Amueblado</label>
                                 <select 
                                     name="amueblado"
-                                    value={amueblado}
+                                    value={body.amueblado}
                                     onChange={handleChange}
                                 >
                                     <option value={true}>Si</option>
@@ -144,11 +183,12 @@ const AddPropiedades = () => {
                                 <select 
                                     id="tipo" 
                                     name="tipo"
-                                    value={tipo}
+                                    value={body.tipo}
                                     onChange={handleChange}
                                 >
                                     <option value="VENTA">VENTA</option>
                                     <option value="ALQUILER">ALQUILER</option>
+                                    <option value="OFICINA">OFICINA</option>
                                 </select>
                             </div>
                             <div className="inner-container">
@@ -156,7 +196,7 @@ const AddPropiedades = () => {
                                 <select 
                                     id="tipo" 
                                     name="servicios"
-                                    value={servicios}
+                                    value={body.servicios}
                                     onChange={handleChange}
                                 >
                                     <option value={true}>Con serivicios</option>
@@ -168,7 +208,7 @@ const AddPropiedades = () => {
                                 <select 
                                     id="cars" 
                                     name="disponibilidad"
-                                    value={disponibilidad}
+                                    value={body.disponibilidad}
                                     onChange={handleChange}
                                 >
                                     <option value={true}>No</option>
@@ -192,7 +232,7 @@ const AddPropiedades = () => {
                                     id="descripcion" 
                                     cols="30" 
                                     rows="30"
-                                    value={descripcion}
+                                    value={body.descripcion}
                                     onChange={handleChange}
                                 >
                                 </textarea>
@@ -230,11 +270,12 @@ const AddPropiedades = () => {
                         </div>
                         <button onClick = {peticionPost}>
                             {/* <Nav defaultActiveKey="/home" className="flex-column text-start"> */}
-                            <Link
+                            {/* <Link
                                 to="/estates"
                                 style={{textDecoration: "none" }}>
                                 Agregar Cliente
-                            </Link>
+                            </Link> */}
+                            Agregar Cliente
                             {/* </Nav> */}
                         </button>
                     </form>

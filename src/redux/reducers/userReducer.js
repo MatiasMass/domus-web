@@ -18,6 +18,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { initSesion } = userSlice.actions;
+export const { initSesion, closeSesion } = userSlice.actions;
 
 export default userSlice.reducer;

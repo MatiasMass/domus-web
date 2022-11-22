@@ -35,3 +35,9 @@ textarea{
     resize: vertical; 
     max-height: 100px;
 }
+
+.form .inner-container select{
+    margin-right: 10px;
+    width: 96%;
+    height: 27px;
+}

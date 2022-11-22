@@ -5,6 +5,7 @@ import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal,
 import {Link} from "react-router-dom"
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -89,9 +90,7 @@ const Estates = () => {
         "fotos": []
       })
 
-    const handleChangeDate = (event) =>{
-      setDate(event)
-    }
+
 
 
     const handleChange = (event) =>{
@@ -132,10 +131,6 @@ const Estates = () => {
           // ref.current = `${error.mes            setError(false)sage}`
         }
     
-      }
-
-      const abrirCerrarModalInsertar = () =>{
-        setModalInsertar(!modalInsertar)
       }
       
       const abrirCerrarModalEditar = () =>{
@@ -197,14 +192,14 @@ const Estates = () => {
             <Col sm={9}> 
                 <h1 className='' style={{margin: "20px 0"}}>Propiedades</h1>
                 {/* <Button  variant="contained" onClick = {abrirCerrarModalInsertar}>Agregar Propiedad</Button>                 */}
-                <Button>
+                <Button color = "success">
                   <Link to = "/addpropiedades">Agregar Propiedad</Link>
                 </Button>
                 <TableContainer>
-                  <Table style = {{height: "500px", overflow: "auto"}}>
+                  <Table>
                     <TableHead>
+                      <TableCell></TableCell>
                       <TableCell>Codigo Propiedad</TableCell>
-
                       <TableCell>Cliente</TableCell>
                       <TableCell>Antiguedad</TableCell>
                       <TableCell>Amueblado</TableCell>
@@ -218,6 +213,13 @@ const Estates = () => {
                       {data.map(consola => {
                         return(
                           <TableRow key = {consola.id}>
+                            <TableCell>
+                              <Box sx = {{cursor: "pointer"}}>
+                                <Link to={`/propiedad/${consola.id}`}>
+                                  <OpenInNewIcon color='secondary' />
+                                </Link>
+                              </Box>
+                            </TableCell>
                             <TableCell>{consola.codPropiedad}</TableCell>
                             <TableCell>cliente</TableCell>
                             <TableCell>{(consola.antiguedad !== null)? consola.antiguedad: "No especificado"}</TableCell>
@@ -228,11 +230,17 @@ const Estates = () => {
                             <TableCell>{typeof consola.precio === 'string' ?  parseFloat(consola.precio) : consola.precio }</TableCell>
                             <TableCell>
                               <Box sx = {{cursor: "pointer"}}>
-                                <EditIcon onClick={()=>seleccionarConsola(consola, 'Editar')} />
+                                <EditIcon 
+                                  color="primary"
+                                  onClick={()=>seleccionarConsola(consola, 'Editar')} 
+                                />
                               </Box>
                               &nbsp;&nbsp;&nbsp;
                               <Box sx = {{cursor: "pointer"}}>
-                                <DeleteIcon onClick={()=>seleccionarConsola(consola, 'Eliminar')} />
+                                <DeleteIcon 
+                                  color="error"
+                                  onClick={()=>seleccionarConsola(consola, 'Eliminar')} 
+                                />
                               </Box>
                             </TableCell>
                           </TableRow>
@@ -241,104 +249,8 @@ const Estates = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-              
+            
               {/* <Modal 
-                open = {modalInsertar}
-                close = {abrirCerrarModalInsertar}>
-                    <Box sx = {style}>
-                      <h3 style={{fontSize: 20, textAlign: "center"}}>Agregar Nueva Propiedad</h3>
-                      <TextField 
-                        label = "Codigo Propiedad" 
-                        name  = "codPropiedad" 
-                        onChange={handleChange} 
-                        required
-                      />
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Select"
-                        required
-                        name = "cliente"
-                        value={cliente}
-                        onChange={handleChange}
-                        helperText="Please select your currency"
-                      >
-                        {clientes.map((cliente) => (
-                          <MenuItem key={cliente} value={cliente}>
-                            {cliente.dni} - {cliente.nombre} {cliente.apellido}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <br />
-                      <TextField
-                        id="outlined-number"
-                        required
-                        label="Cantidad Habitaciones"
-                        type="number"
-                        name = "cantHabitaciones"
-                        onChange={handleChange}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Amueblado"
-                        required
-                        name = "amueblado"
-                        value={amueblado}
-                        onChange={handleChange}
-                        helperText="Seleccione una opcion"
-                      >
-                        <MenuItem value={true}>Si</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                      </TextField>
-                      <br />
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DesktopDatePicker
-                          label="Años de Antiguedad"
-                          inputFormat="DD/MM/YYYY"
-                          value={date}
-                          name = "antiguedad"
-                          onChange={handleChangeDate}
-                          renderInput={(params) => <TextField {...params} />}
-                        />
-                      </LocalizationProvider>
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Tipo"
-                        name = "tipo"
-                        value={tipo}
-                        required
-                        onChange={handleChange}
-                        helperText="Seleccione una opcion"
-                      >
-                        <MenuItem value="ALQUILER">ALQUILER</MenuItem>
-                        <MenuItem value="VENTA">VENTA</MenuItem>
-                      </TextField>
-                      <br />
-                      <TextField
-                        id="outlined-number"
-                        label="Precio $"
-                        type="number"
-                        name = "precio"
-                        required
-                        onChange={handleChange}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                      <br />
-                      <Button variant="outlined" onClick = {abrirCerrarModalInsertar}>Cerrar</Button>
-                      <Button variant="contained" onClick={peticionPost} >Guargar Cambios</Button>
-                    </Box>
-              </Modal> */}
-              <Modal 
                 open = {modalEditar}
                 close = {abrirCerrarModalEditar}>
                     <Box sx = {style}>
@@ -429,7 +341,7 @@ const Estates = () => {
                       <Button variant="outlined" onClick = {abrirCerrarModalEditar}>Cerrar</Button>
                       <Button variant="contained" onClick={()=>peticionPut()} >Editar</Button>
                     </Box>
-              </Modal>    
+              </Modal>     */}
               <Modal 
                 open = {modalEliminar}
                 close = {abrirCerrarModalEliminar}>
@@ -438,7 +350,7 @@ const Estates = () => {
                       <p>Estas seguero que deseas eliminar {consolaSeleccionada &&  consolaSeleccionada.codPropiedad} ?</p>
                       <Box sx = {{display: "flex", flexDirection: "row", gap: 1}}>
                         <Button variant="outlined" onClick = {abrirCerrarModalEliminar}>Cancelar</Button>
-                        <Button variant="contained" onClick={()=>peticionDelete()} >Aceptar</Button>
+                        <Button color="error" variant="contained" onClick={()=>peticionDelete()} >Aceptar</Button>
                       </Box>
                     </Box>
                   </>
