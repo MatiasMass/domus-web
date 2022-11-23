@@ -58,6 +58,9 @@ export const useForm = ( initialState = {} ) => {
     } if (values.depto){
         delete values.depto
     }
+    if (values.clientes){
+        delete values.clientes
+    }
     
     const resetForm = () =>{
         setValues(initialState)

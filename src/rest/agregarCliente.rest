@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
     "id": 1,
-    "cuil": "20-15100203",
-    "nombre": "BRAD PITT",
+    "cuil": "20-15100207",
+    "nombre": "JOAQUIN DESZA",
     "correo": null,
     "telefono": null
 }

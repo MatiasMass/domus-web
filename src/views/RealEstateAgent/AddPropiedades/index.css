@@ -27,6 +27,10 @@
     margin-right: 10px;
 }
 
+.form .inner-container input[type="number"]{
+    /* border-right: 5px solid transparent; */
+}
+
 .form .textarea{
     width: 100%;
 }

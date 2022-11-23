@@ -133,7 +133,7 @@ const Estates = () => {
   return (
     <Container>
         <Row className='vw-100' stlye = {{height: "100vh"}}>
-            <Col sm={3} className = "bg" style= {{height: "105vh"}}>
+            <Col sm={3} className = "bg" style= {{height: "100vh"}}>
                 <SideBarRealEstate name = "Clara" job = "Agente Inmobiliario" />
             </Col>
             <Col sm={9}> 
@@ -170,7 +170,7 @@ const Estates = () => {
                               </Box>
                             </TableCell>
                             <TableCell>{consola.codPropiedad}</TableCell>
-                            <TableCell>cliente</TableCell>
+                            <TableCell>{consola.cliente.cuil}</TableCell>
                             <TableCell>{(consola.antiguedad !== null)? consola.antiguedad: "No especificado"}</TableCell>
                             <TableCell>{(consola.amueblado === true)? "SI" : "NO" }</TableCell>
                             <TableCell>{consola.cantHabitaciones}</TableCell>

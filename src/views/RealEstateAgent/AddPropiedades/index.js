@@ -9,6 +9,7 @@ import './index.css'
 
 const urlPropiedades = "http://localhost:8000/api/propiedades/"
 const urlClientes = "http://localhost:8000/api/clientes/"
+const urlDirecciones = "http://localhost:8000/api/direcciones/"
 
 function randomString(length, chars) {
     let result = '';
@@ -67,7 +68,7 @@ const Select = ({data, label, name, handleChange, options}) =>{
     )
 }
 
-const SelectClientes = ({data, label, name, handleChange, options, setId}) =>{
+const SelectClientes = ({data, label, name, handleChange, options}) =>{
     return(
     <div className="inner-container">
         <label htmlFor="">{label}</label>
@@ -78,8 +79,9 @@ const SelectClientes = ({data, label, name, handleChange, options, setId}) =>{
         >
             {options.map(option => {
                 return(
-                    // setId({option.id}),
-                    setId(1),
+
+                    // setId({option}),
+                    // setId(id)
                     <option value = {option.cuil}>{option.cuil} {">"} "{option.nombre}"</option>
                 )
             })}
@@ -218,7 +220,7 @@ const AddPropiedades = () => {
     
     }
 
-    const [body, handleChange] = useForm(initialForm) 
+    const [body, handleChange] = useForm(initialForm)
     console.log("body antes", body);
 
     const peticionPost = async (e) =>{
@@ -240,7 +242,6 @@ const AddPropiedades = () => {
         } if (body.depto){
             delete body.depto
         }
-
         if (body.clientes){
             delete body.clientes
         }
@@ -256,16 +257,15 @@ const AddPropiedades = () => {
           )
       }
 
-      useEffect(() => {
+    useEffect(() => {
         getClientes()
-      }, [])
-      
-
+    }, [])
+    
 
     return (
     <Container>
         <Row>
-            <Col sm={3} className = "bg" style= {{height: "130vh"}}>
+            <Col sm={3} className = "bg" style= {{height: "140vh"}}>
                 <SideBarRealEstate name = "Clara" job = "Agente Inmobiliario" />
             </Col>
             <Col sm={9}>
@@ -312,6 +312,7 @@ const AddPropiedades = () => {
                                 value = {body.cliente.cuil}
                                 handleChange = {handleChange}
                                 options = {clientes}
+                                // setId = {setId}
                             />
 
                             <Select 

@@ -53,10 +53,10 @@ const Estates = () => {
   return (
     <Container>
         <Row className='vw-100' stlye = {{height: "100vh"}}>
-            <Col sm={3} className = "bg" style= {{height: "142vh"}}>
+            <Col sm={3} className = "bg" style= {{height: "100vh"}}>
                 <SideBarRealEstate name = "Clara" job = "Agente Inmobiliario" />
             </Col>
-            <Col sm={9}>
+            <Col sm={9} style= {{height: "100vh", overflowY:"scroll"}}>
               <div className="outer-container">
                 <div className="content-container">
                   <h1>Propiedad #{data.codPropiedad}</h1>
