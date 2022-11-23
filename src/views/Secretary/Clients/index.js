@@ -1,15 +1,34 @@
 import React, {useEffect, useState} from "react";
+import axios from 'axios'
 import { Container, Row, Col, Nav, Button} from "react-bootstrap";
 import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, TextField, Box} from '@mui/material'
 import "../Secretary.css";
 import SideBar from "../../../layout/SideBar";
-import clientesAPI from '../../../clientes'
 import { Link } from "react-router-dom";
 
+const urlClientes = "http://localhost:8000/api/clientes/"
+
 const Clients = () => {
+  const [clientes, setClientes] = useState([])
 
-  const [clientes, setClientes] = useState(clientesAPI)
+  const getClientes = async () =>{
 
+    try {
+        const response = await axios.get(urlClientes)
+        if (response?.status === 200){
+            const initialClientes = response.data
+            setClientes(initialClientes)
+            return
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+
+  }
+
+  useEffect(() => {
+    getClientes()
+  }, [])
 
   console.log(clientes);
   return (
@@ -37,28 +56,19 @@ const Clients = () => {
           <TableContainer>
                   <Table style = {{height: "500px", overflow: "auto"}}>
                     <TableHead>
-                      <TableCell>DNI</TableCell>
-                      <TableCell>Nombre</TableCell>
-                      <TableCell>Apellido</TableCell>
-                      <TableCell>Fecha Nacimineto</TableCell>
+                      <TableCell>CUIL</TableCell>
+                      <TableCell>Nombre y Apellido</TableCell>
                       <TableCell>Telefono</TableCell>
-                      <TableCell>Direccion</TableCell>
                       <TableCell>Correo</TableCell>
-                      <TableCell>Tipo</TableCell>
-                      <TableCell></TableCell>
                     </TableHead>
                     <TableBody>
                       {clientes.map(cliente => {
                         return(
                           <TableRow key = {cliente.id}>
-                            <TableCell>{cliente.dni}</TableCell>
+                            <TableCell>{cliente.cuil}</TableCell>
                             <TableCell>{cliente.nombre}</TableCell>
-                            <TableCell>{cliente.apellido}</TableCell>
-                            <TableCell>{cliente.fecha}</TableCell>
-                            <TableCell>{cliente.telefono}</TableCell>
-                            <TableCell>{cliente.direccion}</TableCell>
-                            <TableCell>{cliente.correo}</TableCell>
-                            <TableCell>{cliente.tipoCliente}</TableCell>
+                            <TableCell>{cliente.telefono ? cliente.telefono : "No especificado"}</TableCell>
+                            <TableCell>{cliente.correo ? cliente.telefono : "No especificado"}</TableCell>
                             <TableCell></TableCell>
                           </TableRow>
                         )

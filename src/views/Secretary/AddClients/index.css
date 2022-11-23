@@ -1,0 +1,17 @@
+.form2 {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+/* 
+table{
+    border: 1px solid black;
+} */
+
+table tbody tr td{
+    padding: 20px;
+    text-align: left;
+}

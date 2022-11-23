@@ -124,7 +124,6 @@ const DateInput = ({value, handleChange}) =>{
 const AddPropiedades = () => {
 
     const [clientes, setClientes] = useState([])
-    const [id, setId] = useState(1)
     const [amueblado, setAmueblado] = useState([
         {
             valor: true,
