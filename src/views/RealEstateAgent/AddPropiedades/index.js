@@ -33,6 +33,20 @@ const InputText = ({label, name, placeholder, value = "", handleChange, read = f
     )   
 }
 
+const InputImage = () =>{
+    return(
+        <div className="inner-container">
+            <label htmlFor="">Cargar Imagen</label>
+            <input 
+                type="file"
+                id="avatar" 
+                name="avatar"
+                accept="image/png, image/jpeg"
+            />
+        </div>
+    )
+}
+
 const InputNumber = ({label, name, value, placeholder,handleChange, min = "1"}) =>{
     return(
         <div className="inner-container">
@@ -79,9 +93,6 @@ const SelectClientes = ({data, label, name, handleChange, options}) =>{
         >
             {options.map(option => {
                 return(
-
-                    // setId({option}),
-                    // setId(id)
                     <option value = {option.cuil}>{option.cuil} {">"} "{option.nombre}"</option>
                 )
             })}
@@ -344,6 +355,8 @@ const AddPropiedades = () => {
                                 handleChange = {handleChange}
                                 name = "precio"
                             />
+
+                            <InputImage />
 
                             <TextArea 
                                 value = {body.descripcion}

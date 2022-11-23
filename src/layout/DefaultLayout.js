@@ -9,7 +9,6 @@ const DefaultLayout = () => {
   return (
     <BrowserRouter>
       <div style={{ height: "100%", width: "100%" }}>
-        {/* <NavBar /> */}
         <LoadRoutes />
       </div>
     </BrowserRouter>
