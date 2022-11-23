@@ -6,10 +6,9 @@ import {Link} from "react-router-dom"
 import EditIcon from '@mui/icons-material/Edit';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DeleteIcon from '@mui/icons-material/Delete';
-import dayjs from 'dayjs';
+
 import SideBarRealEstate from '../../../layout/SideBarRealEstate'
 import "./Estates.css" 
-import clientesAPI from '../../../clientes'
 
 const url = "http://localhost:8000/api/propiedades/"
 
@@ -52,12 +51,6 @@ const styleModalCerrar = {
 
 const Estates = () => {
     const [data, setData] = useState([])
-    const [clientes, setClientes] = useState(clientesAPI)
-    const [date, setDate] = React.useState(dayjs('2022-08-18'));
-    const [cliente, setCliente] = React.useState(clientes[0].dni);
-    const [amueblado, setAmueblado] = React.useState('No');
-    const [tipo, setTipo] = useState("Alquiler")
-    const [modalInsertar, setModalInsertar] = useState(false)
     const [modalEditar, setModalEditar] = useState(false)
     const [modalEliminar, setModalEliminar] = useState(false)
 
