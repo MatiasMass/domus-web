@@ -115,6 +115,7 @@ const Estates = () => {
           console.log(data);
         })
         abrirCerrarModalEliminar();
+        alert("Se ha eliminado con exito la propiedad")
       }
 
     useEffect(() => {

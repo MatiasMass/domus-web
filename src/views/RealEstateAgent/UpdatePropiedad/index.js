@@ -268,6 +268,7 @@ const AddPropiedades = () => {
         .then(response =>{ 
             console.log("Todo OK");
             navigate('/estates')
+            alert("Se ha modificado con exito la propiedad")
           }
           )
       }

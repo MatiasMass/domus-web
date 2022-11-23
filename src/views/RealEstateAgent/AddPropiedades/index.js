@@ -263,6 +263,7 @@ const AddPropiedades = () => {
             console.log(body);
             console.log("Todo OK");
             navigate('/estates')
+            alert("Se ha agregado con exito la propiedad")
           }
           )
       }
