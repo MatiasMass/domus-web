@@ -11,6 +11,7 @@ export { default as ViewClients } from "./RealEstateAgent/ViewClients";
 export { default as ViewEvents } from "./RealEstateAgent/ViewEvents";
 export { default as Estates } from "./RealEstateAgent/Estates";
 export { default as AddPropiedades} from "./RealEstateAgent/AddPropiedades";
+export { default as UpdatePropiedad} from "./RealEstateAgent/UpdatePropiedad";
 export { default as Propiedad} from "./RealEstateAgent/Propiedad";
 export { default as Admin } from "./Admin/Main";
 export { default as Login } from "./Login";

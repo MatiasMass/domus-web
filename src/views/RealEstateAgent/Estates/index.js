@@ -61,56 +61,7 @@ const Estates = () => {
     const [modalEditar, setModalEditar] = useState(false)
     const [modalEliminar, setModalEliminar] = useState(false)
 
-    const [consolaSeleccionada, setConsolaSeleccionada] = useState(
-      {
-        "id": 1,
-        "codPropiedad": "",
-        "medidas": "",
-        "antiguedad": null,
-        "amueblado": false,
-        "cantHabitaciones": 31,
-        "servicios": null,
-        "descripcion": "Sin descricion",
-        "disponibilidad": true,
-        "tipo": "VENTA",
-        "precio": 1,
-        "direccion": {
-          "id": 1,
-          "provincia": "No especificado",
-          "ciudad": "No especificado",
-          "numero": "1",
-          "barrio": null,
-          "piso": null,
-          "depto": null
-        },
-        "fotos": []
-      })
-
-
-
-
-    const handleChange = (event) =>{
-      // e.preventDefaul()
-      const name = event.target.name
-      const value = event.target.value
-      setConsolaSeleccionada(prevState =>({
-        ...prevState,
-        [name]: value
-      }))
-      console.log(consolaSeleccionada);
-      consolaSeleccionada.antiguedad = date
-      console.log(event);
-      if (event.target.name === "amueblado"){
-        setAmueblado(event.target.value)
-      }else if (event.target.name === "tipo"){
-        setTipo(event.target.value)
-      }else if (event.target.name === "cliente"){
-        setCliente(event.target.value)
-      }
-      
-    }
-
-   
+    const [consolaSeleccionada, setConsolaSeleccionada] = useState({})
 
     const getPropiedades = async () =>{
         
@@ -228,10 +179,9 @@ const Estates = () => {
                             <TableCell>{typeof consola.precio === 'string' ?  parseFloat(consola.precio) : consola.precio }</TableCell>
                             <TableCell>
                               <Box sx = {{cursor: "pointer"}}>
-                                <EditIcon 
-                                  color="primary"
-                                  onClick={()=>seleccionarConsola(consola, 'Editar')} 
-                                />
+                                <Link to={`/editar/${consola.id}`}>
+                                  <EditIcon color='primary' />
+                                </Link>
                               </Box>
                               &nbsp;&nbsp;&nbsp;
                               <Box sx = {{cursor: "pointer"}}>
@@ -247,99 +197,6 @@ const Estates = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-            
-              {/* <Modal 
-                open = {modalEditar}
-                close = {abrirCerrarModalEditar}>
-                    <Box sx = {style}>
-                      <h3 style={{fontSize: 20, textAlign: "center"}}>Editar Propiedad</h3>
-                      <TextField label = "Codigo Propiedad" name  = "codPropiedad" onChange={handleChange} value = {consolaSeleccionada && consolaSeleccionada.codPropiedad}></TextField>
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Select"
-                        name = "cliente"
-                        value={consolaSeleccionada && cliente.dni}
-                        onChange={handleChange}
-                        helperText="Elegir cliente"
-                        // value = {consolaSeleccionada && consolaSeleccionada.c}
-                      >
-                        {clientes.map((cliente) => (
-                          <MenuItem key={cliente} value={cliente}>
-                            {cliente.dni} - {cliente.nombre} {cliente.apellido}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <br />
-                      <TextField
-                        id="outlined-number"
-                        label="Cantidad Habitaciones"
-                        type="number"
-                        name = "cantHabitaciones"
-                        onChange={handleChange}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value = {consolaSeleccionada && consolaSeleccionada.cantHabitaciones}
-                      />
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Amueblado"
-                        name = "amueblado"
-                        value = {consolaSeleccionada && consolaSeleccionada.amueblado}
-                        onChange={handleChange}
-                        helperText="Seleccione una opcion"
-                        
-                      >
-                        <MenuItem value={true}>Si</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                      </TextField>
-                      <br />
-                      <TextField
-                        id="outlined-number"
-                        label="Años de antiguedad"
-                        type="number"
-                        name = "antiguedad"
-                        onChange={handleChange}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value = {consolaSeleccionada && consolaSeleccionada.antiguedad}
-                      />
-                      <br />
-                      <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Tipo"
-                        name = "tipo"
-                        value = {consolaSeleccionada && consolaSeleccionada.tipo}
-                        onChange={handleChange}
-                        helperText="Seleccione una opcion"
-                        
-                      >
-                        <MenuItem value="ALQUILER">ALQUILER</MenuItem>
-                        <MenuItem value="VENTA">VENTA</MenuItem>
-                      </TextField>
-                      <br />
-                      <TextField
-                        id="outlined-number"
-                        label="Precio $"
-                        type="number"
-                        name = "precio"
-                        value = {consolaSeleccionada && consolaSeleccionada.precio}
-                        onChange={handleChange}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                      <br />
-                      <Button variant="outlined" onClick = {abrirCerrarModalEditar}>Cerrar</Button>
-                      <Button variant="contained" onClick={()=>peticionPut()} >Editar</Button>
-                    </Box>
-              </Modal>     */}
               <Modal 
                 open = {modalEliminar}
                 close = {abrirCerrarModalEliminar}>

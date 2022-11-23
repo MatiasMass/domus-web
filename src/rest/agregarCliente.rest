@@ -1,0 +1,10 @@
+POST http://localhost:8000/api/clientes
+Content-Type: application/json
+
+{
+    "id": 1,
+    "cuil": "20-15100203",
+    "nombre": "BRAD PITT",
+    "correo": null,
+    "telefono": null
+}

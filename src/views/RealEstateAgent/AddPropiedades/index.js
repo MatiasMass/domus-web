@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Container, Row, Col, Form} from  'react-bootstrap'
 import {Button} from '@mui/material'
 import { Link, useNavigate } from "react-router-dom";
 import SideBarRealEstate from '../../../layout/SideBarRealEstate'
-import clientesAPI from '../../../clientes'
-import './index.css'
 import axios from 'axios'
 import {useForm} from '../../../hooks/useForms'
+import './index.css'
 
-const url = "http://localhost:8000/api/propiedades/"
+const urlPropiedades = "http://localhost:8000/api/propiedades/"
+const urlClientes = "http://localhost:8000/api/clientes/"
 
 function randomString(length, chars) {
     let result = '';
@@ -16,56 +16,251 @@ function randomString(length, chars) {
     return result;
 }
 
+const InputText = ({label, name, placeholder, value = "", handleChange, read = false}) =>{
+    return(
+        <div className="inner-container">
+            <label htmlFor="">{label}</label>
+            <input 
+                name = {name}
+                type = "text"
+                defaultValue = {value}
+                onChange = {handleChange}
+                placeholder={placeholder}
+                readOnly = {read}
+            />
+        </div>
+    )   
+}
+
+const InputNumber = ({label, name, value, placeholder,handleChange, min = "1"}) =>{
+    return(
+        <div className="inner-container">
+            <label htmlFor="">{label}</label>
+            <input 
+                name = {name}
+                type = "number"
+                defaultValue = {value}
+                onChange = {handleChange}
+                placeholder={placeholder}
+                min = {min}
+            />
+        </div>
+    )   
+}
+
+const Select = ({data, label, name, handleChange, options}) =>{
+    return(
+    <div className="inner-container">
+        <label htmlFor="">{label}</label>
+        <select 
+            name = {name}
+            value = {data}
+            onChange = {handleChange}
+        >
+            {options.map(option => {
+                return(
+                    <option value = {option.valor}>{option.data}</option>
+                )
+            })}
+        </select>
+    </div>
+    )
+}
+
+const SelectClientes = ({data, label, name, handleChange, options, setId}) =>{
+    return(
+    <div className="inner-container">
+        <label htmlFor="">{label}</label>
+        <select 
+            name = {name}
+            value = {data}
+            onChange = {handleChange}
+        >
+            {options.map(option => {
+                return(
+                    // setId({option.id}),
+                    setId(1),
+                    <option value = {option.cuil}>{option.cuil} {">"} "{option.nombre}"</option>
+                )
+            })}
+        </select>
+    </div>
+    )
+}
+
+
+const TextArea = ({data, handleChange}) =>{
+    return(
+        <div className="inner-container textarea">
+            <label htmlFor="">Descripcion</label>
+            <textarea 
+                name="descripcion" 
+                cols="30" 
+                rows="30"
+                defaultValue = {data}
+                onChange = {handleChange}
+            >
+            </textarea>
+        </div>
+    )
+}
+
+const DateInput = ({value, handleChange}) =>{
+    return(
+        <div className="inner-container">
+            <label htmlFor="">Antiguedad: </label>
+            <input 
+                type="date" 
+                name = "antiguedad"
+                value = {value}
+                onChange = {handleChange}
+            />
+        </div>
+    )
+}
+
 const AddPropiedades = () => {
 
-    const [clientes, setClientes] = useState(clientesAPI)
-
-
+    const [clientes, setClientes] = useState([])
+    const [id, setId] = useState(1)
+    const [amueblado, setAmueblado] = useState([
+        {
+            valor: true,
+            data: "Si"
+        },
+        {
+            valor: false,
+            data: "No"
+        }]
+    )
+    const [tipo, setTipo] = useState([
+        {
+            valor: "ALQUILER",
+            data: "ALQUILER"
+        },
+        {
+            valor: "VENTA",
+            data: "VENTA"
+        },
+        {
+            valor: "OFICINA",
+            data: "OFICINA"
+        }]
+    )
+    const [servicios, setServicios] = useState([
+        {
+            valor: true,
+            data: "Con servicios"
+        },
+        {
+            valor: false,
+            data: "Sin servicios"
+        },]
+    )
+    const [disponibilidad, setDisponibilidad] = useState([
+        {
+            valor: true,
+            data: "Si"
+        },
+        {
+            valor: false,
+            data: "No"
+        },]
+    )
     const navigate = useNavigate()
 
+
     const initialForm = 
-        {
-            "codPropiedad": randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-            "medidas": "",
-            "antiguedad": null,
-            "amueblado": false,
-            "cantHabitaciones": 1,
-            "servicios": null,
-            "descripcion": "",
-            "disponibilidad": true,
-            "tipo": "",
-            "precio": 1,
-            "direccion": {
+            {
                 "id": 1,
-                "provincia": "",
-                "ciudad": "",
-                "numero": "",
-                "barrio": null,
-                "piso": null,
-                "depto": null
-            },
-            "cliente": {
-                "id": 1,
-                "cuil": "",
-                "nombre": "",
-                "correo": null,
-                "telefono": null
-            },
-            "fotos": []
+                "codPropiedad": randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+                "medidas": "",
+                "antiguedad": null,
+                "amueblado": false,
+                "cantHabitaciones": 1,
+                "servicios": null,
+                "descripcion": "",
+                "disponibilidad": true,
+                "tipo": "ALQUILER",
+                "precio": 1,
+                "direccion": {
+                    "id": 1,
+                    "provincia": "",
+                    "ciudad": "",
+                    "numero": "",
+                    "calle": "",
+                    "barrio": null,
+                    "piso": null,
+                    "depto": null
+                },
+                "cliente": {
+                    "id": 1,
+                    "cuil": "",
+                    "nombre": "",
+                    "correo": null,
+                    "telefono": null
+                },
+                "fotos": []
+            }
+
+    const getClientes = async () =>{
+
+        try {
+            const response = await axios.get(urlClientes)
+            if (response?.status === 200){
+                const initialClientes = response.data
+                setClientes(initialClientes)
+                return
+            }
+        } catch (error) {
+            console.error(error.message);
         }
+    
+    }
 
     const [body, handleChange] = useForm(initialForm) 
+    console.log("body antes", body);
 
     const peticionPost = async (e) =>{
         e.preventDefault()
-        console.log(body);
-        await axios.post(url, body)
+
+        if (body.provincia){
+            delete body.provincia
+        }
+        if (body.ciudad){
+            delete body.ciudad
+        }
+        if (body.numero){
+            delete body.numero
+        }
+         if (body.barrio){
+            delete body.barrio
+        } if (body.piso){
+            delete body.piso
+        } if (body.depto){
+            delete body.depto
+        }
+
+        if (body.clientes){
+            delete body.clientes
+        }
+
+        console.log("body despues", body);
+
+        await axios.post(urlPropiedades, body)
           .then(response =>{ 
+            console.log(body);
             console.log("Todo OK");
             navigate('/estates')
           }
           )
       }
+
+      useEffect(() => {
+        getClientes()
+      }, [])
+      
+
 
     return (
     <Container>
@@ -78,160 +273,142 @@ const AddPropiedades = () => {
                     <h1 style={{marginTop: "20px"}}>Agregar Nueva Propiedad</h1>
                     <form action="">
                         <h3 className = "info-propiedad">Propiedad Informacion</h3>
+
                         <div className="form">
-                            <div className="inner-container">
-                                <label htmlFor="">Codigo de Propiedad</label>
-                                <input 
-                                    type="text" 
-                                    placeholder='CP' 
-                                    readOnly
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Cantidad de Habitaciones</label>
-                                <input 
-                                    type="number"
-                                    min="1"
-                                    placeholder='Cantidad Habitaciones' 
-                                    onChange={handleChange} 
-                                    name = "cantHabitaciones"/>
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Amueblado</label>
-                                <select 
-                                    name="amueblado"
-                                    value={body.amueblado}
-                                    onChange={handleChange}
-                                >
-                                    <option value={true}>Si</option>
-                                    <option value={false}>No</option>
-                                </select>
-                            </div>
-                            {/* Tipo */}
-                            <div className="inner-container">
-                                <label htmlFor="">Tipo</label>
-                                <select 
-                                    id="tipo" 
-                                    name="tipo"
-                                    value={body.tipo}
-                                    onChange={handleChange}
-                                >
-                                    <option value="VENTA">VENTA</option>
-                                    <option value="ALQUILER">ALQUILER</option>
-                                    <option value="OFICINA">OFICINA</option>
-                                </select>
-                            </div>
-                            <div className="inner-container">
-                            <label htmlFor="">Servicios (agua, luz, ...)</label>
-                                <select 
-                                    id="tipo" 
-                                    name="servicios"
-                                    value={body.servicios}
-                                    onChange={handleChange}
-                                >
-                                    <option value={true}>Con serivicios</option>
-                                    <option value={false}>Sin servicios</option>
-                                </select>
-                            </div>
-                            <div className="inner-container">
-                            <label htmlFor="">Disponiblidad</label>
-                                <select 
-                                    id="cars" 
-                                    name="disponibilidad"
-                                    value={body.disponibilidad}
-                                    onChange={handleChange}
-                                >
-                                    <option value={true}>No</option>
-                                    <option value={false}>Si</option>
-                                </select>
-                            </div> 
-                            <div className="inner-container">
-                                <label htmlFor="">Precio $</label>
-                                <input 
-                                    type="number"
-                                    min="1"
-                                    placeholder='Precio $' 
-                                    onChange={handleChange} 
-                                    name = "precio"/>
-                            </div>                           
-                            <div className="inner-container textarea">
-                                <label htmlFor="">Descripcion</label>
-                                {/* <input type="text" placeholder='ID'/> */}
-                                <textarea 
-                                    name="descripcion" 
-                                    id="descripcion" 
-                                    cols="30" 
-                                    rows="30"
-                                    value={body.descripcion}
-                                    onChange={handleChange}
-                                >
-                                </textarea>
-                            </div>
+                            <InputText 
+                                label = "Codigo de Propiedad"
+                                name = "codPropiedad"
+                                value= {body.codPropiedad}
+                                placeholder = "CP"
+                                read = {true}
+                            />
                             
+                            <InputNumber 
+                                label = "Cantidad de Habitaciones"
+                                value = {body.cantHabitaciones}
+                                placeholder='Cantidad Habitaciones'
+                                name = "cantHabitaciones"
+                                handleChange={handleChange} 
+                            />
+                            
+                            <DateInput
+                                value = {body.antiguedad}
+                                handleChange = {handleChange}
+                            />
+
+                            <Select 
+                                label = "Amueblado"
+                                name = "amueblado"
+                                value = {body.amueblado}
+                                handleChange = {handleChange}
+                                options = {amueblado}
+                            />
+
+                            {console.log("cliente", body.cliente)}
+                            
+                            <SelectClientes
+                                label = "Cliente"
+                                name = "clientes"
+                                value = {body.cliente.cuil}
+                                handleChange = {handleChange}
+                                options = {clientes}
+                            />
+
+                            <Select 
+                                label = "Tipo"
+                                name = "tipo"
+                                value = {body.tipo}
+                                handleChange = {handleChange}
+                                options = {tipo}
+                            />
+                        
+                            <Select 
+                                label = "Servicios"
+                                name = "servicios"
+                                value = {body.servicios}
+                                handleChange = {handleChange}
+                                options = {servicios}
+                            />
+
+                            <Select 
+                                label = "Disponibilidad"
+                                name = "disponibilidad"
+                                value = {body.disponibilidad}
+                                handleChange = {handleChange}
+                                options = {disponibilidad}
+                            />
+
+                            <InputNumber
+                                label = "Precio"
+                                placeholder = "Precio $"
+                                handleChange = {handleChange}
+                                name = "precio"
+                            />
+
+                            <TextArea 
+                                value = {body.descripcion}
+                                handleChange = {handleChange}
+                            />                      
                         </div>
                         <h3>Direccion Informacion</h3>
                         <div className="form">
-                            <div className="inner-container">
-                                <label htmlFor="">Provincia</label>
-                                <input 
-                                    type="text"
-                                    name="provincia"
-                                    placeholder='Provincia' 
-                                    onChange={handleChange}
-                                    value={body.direccion.provincia} 
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Ciudad</label>
-                                <input 
-                                    type="text"
-                                    name="ciudad"
-                                    placeholder='Ciudad' 
-                                    onChange={handleChange}
-                                    value={body.direccion.ciudad} 
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Numero</label>
-                                <input 
-                                    type="number"
-                                    min="1"
-                                    placeholder='Numeros' 
-                                    onChange={handleChange} 
-                                    name = "numero"
-                                    value={body.direccion.numero}
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Barrio</label>
-                                <input 
-                                    type="text"
-                                    name="barrio"
-                                    placeholder='Barrio' 
-                                    onChange={handleChange}
-                                    value={body.direccion.barrio} 
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Piso</label>
-                                <input 
-                                    type="text"
-                                    name="piso"
-                                    placeholder='Piso' 
-                                    onChange={handleChange}
-                                    value={body.direccion.piso} 
-                                />
-                            </div>
-                            <div className="inner-container">
-                                <label htmlFor="">Depto</label>
-                                <input 
-                                    type="text"
-                                    name="depto"
-                                    placeholder='Depto' 
-                                    onChange={handleChange}
-                                    value={body.direccion.depto} 
-                                />
-                            </div>
+                            <InputText 
+                                label = "Provincia"
+                                name = "provincia"
+                                value= {body.direccion.provincia}
+                                placeholder = "Provincia"
+                                handleChange = {handleChange}
+                            />
+
+                            <InputText 
+                                label = "Ciudad"
+                                name = "ciudad"
+                                value= {body.direccion.ciudad}
+                                placeholder = "Ciudad"
+                                handleChange = {handleChange}
+                            />
+
+                            <InputText 
+                                label = "Barrio"
+                                name = "barrio"
+                                value= {body.direccion.barrio}
+                                placeholder = "Barrio"
+                                handleChange = {handleChange}
+                            />
+
+                            <InputText 
+                                label = "Calle"
+                                name = "calle"
+                                value= {body.direccion.calle}
+                                placeholder = "Calle"
+                                handleChange = {handleChange}
+                            />
+
+
+                            <InputNumber 
+                                label = "Numero"
+                                value = {body.direccion.numero}
+                                placeholder='Cantidad Habitaciones'
+                                name = "cantHabitaciones"
+                                handleChange={handleChange} 
+                            />
+
+                            <InputText 
+                                label = "Piso"
+                                name = "piso"
+                                value= {body.direccion.piso}
+                                placeholder = "Piso"
+                                handleChange = {handleChange}
+                            />
+
+                            <InputText 
+                                label = "Depto"
+                                name = "depto"
+                                value= {body.direccion.depto}
+                                placeholder = "Depto"
+                                handleChange = {handleChange}
+                            />
+
                         </div>
                         <div className="buttons">
                             <Button color="success" variant="contained" onClick = {peticionPost} className="button">
